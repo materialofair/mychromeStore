@@ -1,0 +1,23 @@
+{
+  "manifest_version": 3,
+  "name": "Focus Notes · 专注便签",
+  "version": "1.0.0",
+  "description": "本地便签与 Space 扩展商店更新演示。",
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA0nbIM7BgtP75WpNGeVcxNHDzCVHG4rGvz3I/DfpDwDWvJX6E1ve2+GNQO4hinRUVj5g48i3qY+uTOQVDtKpJB7Q1L4PmUNV03Fda6BCDJtT/68GUyj4rcUgBa0jh4WTmwkNVezXAgsTu8v9EfXHfmTlbkJGLgTdLmUuz/6wqKjZXn4JyfaMIS/bkbNwpPB5yXkZQ3vBWTSNLF/ROKlAc5rNimZyQPwKQU4v3dcMq+Ag8Mvh+WiT1dKwqzcQlvf+oDeOhxCF7j5ASqFLSGKv0frD216ggwhXB9mOlBlUsBXh58pbhySCw6m8U3vjFpew2EZcplTN/Tnu94BtVkr2cTwIDAQAB",
+  "permissions": [
+    "storage"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "Focus Notes"
+  },
+  "externally_connectable": {
+    "matches": [
+      "http://localhost/*",
+      "http://127.0.0.1/*"
+    ]
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "name": "space-extension-store",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "scripts": {
+    "dev": "npm run releases && vite --host 127.0.0.1 --port 5173 --strictPort",
+    "releases": "node scripts/build-releases.mjs",
+    "build": "npm run releases && tsc --noEmit && vite build",
+    "preview": "vite preview --host 127.0.0.1 --port 5173 --strictPort",
+    "test": "vitest run",
+    "test:e2e": "playwright test",
+    "check": "tsc --noEmit"
+  },
+  "dependencies": {
+    "fflate": "0.8.3"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.58.2",
+    "@types/node": "^22.0.0",
+    "typescript": "5.9.3",
+    "vite": "7.3.6",
+    "vitest": "4.1.11"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/materialofair/mychromeStore.git"
+  },
+  "bugs": {
+    "url": "https://github.com/materialofair/mychromeStore/issues"
+  }
+}

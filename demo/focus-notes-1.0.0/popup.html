@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Focus Notes</title>
+    <link rel="stylesheet" href="popup.css" />
+  </head>
+  <body>
+    <header>
+      <span class="mark">✳</span>
+      <div><strong>Focus Notes</strong><small>留一点空间，给灵感。</small></div>
+      <span id="version"></span>
+    </header>
+    <main>
+      <label for="note">此刻，想记下什么？</label
+      ><textarea
+        id="note"
+        disabled
+        placeholder="一个想法、一件待办，或今天的小目标…"
+        maxlength="5000"
+      ></textarea>
+      <div class="meta">
+        <span id="saved" role="status">正在读取…</span><span id="count"></span>
+      </div>
+      <div id="new-feature" hidden>
+        <span>✦ 1.1 新功能</span
+        ><button id="theme" type="button" disabled>切换纸张颜色</button>
+      </div>
+    </main>
+    <footer>笔记只保存在当前浏览器 · SPACE DEMO</footer>
+    <script src="popup.js"></script>
+  </body>
+</html>
