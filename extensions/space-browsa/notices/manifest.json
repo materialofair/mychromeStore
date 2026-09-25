@@ -1,0 +1,119 @@
+{
+  "schema": 1,
+  "upstreamRepository": "https://github.com/xiaohuzai/browsa",
+  "upstreamCommit": "7f6df4b8712a40214a358c34483982b7e774f4b8",
+  "noticePackagePrefix": "notices/",
+  "licenseReferences": "license-references.json",
+  "artifacts": [
+    {
+      "component": "@mozilla/readability",
+      "packagedPath": "lib/vendor/Readability.iife.js",
+      "artifactSource": "https://github.com/xiaohuzai/browsa/blob/7f6df4b8712a40214a358c34483982b7e774f4b8/lib/vendor/Readability.iife.js",
+      "sha256": "99b83d761b88294c056caf14f71ace7cbb72cc4b2ab16c3e6e7898d2ece0092c",
+      "version": null,
+      "versionEvidence": "No version header or matching build/_deps lock/source is tracked in pinned upstream. Identified by commit and artifact SHA-256, not inferred from license references.",
+      "license": "Apache-2.0",
+      "noticePaths": [
+        "mozilla-readability/LICENSE.md",
+        "mozilla-readability/APACHE-2.0.txt",
+        "mozilla-readability/SOURCE-ATTRIBUTION.txt"
+      ]
+    },
+    {
+      "component": "turndown",
+      "packagedPath": "lib/vendor/Turndown.iife.js",
+      "artifactSource": "https://github.com/xiaohuzai/browsa/blob/7f6df4b8712a40214a358c34483982b7e774f4b8/lib/vendor/Turndown.iife.js",
+      "sha256": "30973b2262948fd8d37ca938b28bb73d2b658bb04c30b67f8bae3388581fea76",
+      "version": null,
+      "versionEvidence": "No version header or matching build/_deps lock/source is tracked in pinned upstream. Identified by commit and artifact SHA-256, not inferred from license references.",
+      "license": "MIT",
+      "noticePaths": [
+        "turndown/LICENSE"
+      ],
+      "supplementalNoticeReferences": [
+        "@mixmark-io/domino"
+      ]
+    },
+    {
+      "component": "turndown-plugin-gfm",
+      "packagedPath": "lib/vendor/TurndownPluginGfm.iife.js",
+      "artifactSource": "https://github.com/xiaohuzai/browsa/blob/7f6df4b8712a40214a358c34483982b7e774f4b8/lib/vendor/TurndownPluginGfm.iife.js",
+      "sha256": "500fccaafc3a5e89caafc27e91c1a3f638f4b4213f74a91d72fcd193cf33f868",
+      "version": null,
+      "versionEvidence": "No version header or matching build/_deps lock/source is tracked in pinned upstream. Identified by commit and artifact SHA-256, not inferred from license references.",
+      "license": "MIT",
+      "noticePaths": [
+        "turndown-plugin-gfm/LICENSE"
+      ]
+    },
+    {
+      "component": "marked",
+      "packagedPath": "lib/vendor/marked.bundle.js",
+      "artifactSource": "https://github.com/xiaohuzai/browsa/blob/7f6df4b8712a40214a358c34483982b7e774f4b8/lib/vendor/marked.bundle.js",
+      "sha256": "347aa148f5c80282f4b82672a4f28f5a55ff97ecbd386c43f646cfc765bd0dc8",
+      "version": null,
+      "versionEvidence": "No version header or matching build/_deps lock/source is tracked in pinned upstream. Identified by commit and artifact SHA-256, not inferred from license references.",
+      "license": "MIT",
+      "noticePaths": [
+        "marked/LICENSE.md"
+      ]
+    },
+    {
+      "component": "markstream-core",
+      "packagedPath": "lib/vendor/markstream-core.bundle.js",
+      "artifactSource": "https://github.com/xiaohuzai/browsa/blob/7f6df4b8712a40214a358c34483982b7e774f4b8/lib/vendor/markstream-core.bundle.js",
+      "sha256": "c7775439777a588bfc447702a2b963bd8b7875ec484b7e5cc2f03c6ce99ee409",
+      "version": null,
+      "versionEvidence": "No version header or matching build/_deps lock/source is tracked in pinned upstream. Identified by commit and artifact SHA-256, not inferred from license references.",
+      "license": "MIT",
+      "noticePaths": [
+        "markstream-core/LICENSE"
+      ]
+    },
+    {
+      "component": "stream-markdown-parser",
+      "packagedPath": "lib/vendor/stream-markdown-parser.bundle.js",
+      "artifactSource": "https://github.com/xiaohuzai/browsa/blob/7f6df4b8712a40214a358c34483982b7e774f4b8/lib/vendor/stream-markdown-parser.bundle.js",
+      "sha256": "d68a9e438a1518836e3f48f5ddff6ebddd12258606ffc9280b05d269955ebca1",
+      "version": null,
+      "versionEvidence": "No version header or matching build/_deps lock/source is tracked in pinned upstream. Identified by commit and artifact SHA-256, not inferred from license references.",
+      "license": "MIT",
+      "noticePaths": [
+        "stream-markdown-parser/LICENSE"
+      ],
+      "supplementalNoticeReferences": [
+        "entities",
+        "linkify-it",
+        "markdown-it-container",
+        "markdown-it-footnote",
+        "markdown-it-ins",
+        "markdown-it-mark",
+        "markdown-it-sup",
+        "markdown-it-task-checkbox",
+        "markdown-it-ts",
+        "mdurl",
+        "punycode.js",
+        "uc.micro"
+      ]
+    },
+    {
+      "component": "Space Grotesk",
+      "packagedPath": "fonts/SpaceGrotesk.ttf",
+      "artifactSource": "https://github.com/xiaohuzai/browsa/blob/7f6df4b8712a40214a358c34483982b7e774f4b8/fonts/SpaceGrotesk.ttf",
+      "sha256": "acad6de1fc93436f5c0f1f4137751ef04f1aea3063e7036535970ffcfbd79f72",
+      "version": "2.000",
+      "versionEvidence": "Embedded OpenType name table ID5: Version 2.000; ID0: Copyright 2020 The Space Grotesk Project Authors (https://github.com/floriankarsten/space-grotesk); ID13: SIL Open Font License Version 1.1.",
+      "license": "OFL-1.1",
+      "noticePaths": [
+        "space-grotesk/OFL.txt"
+      ],
+      "licenseSource": "https://raw.githubusercontent.com/floriankarsten/space-grotesk/03507d024a01282884232081fc6011c09ff4e849/OFL.txt",
+      "licenseSha256": "564ce565c371c5e5bbf286006565a7c9aa55a9f56e7ca58d56e05d649dd61a72"
+    }
+  ],
+  "limitations": [
+    "The original JavaScript package versions and complete transitive dependency graph cannot be proven from the tracked prebuilt bundles.",
+    "Official license references preserve component and relevant dependency-family notices, but their version numbers must not be presented as an SBOM of these bundles.",
+    "npm audit of the SPACE recipe lockfile does not assess retained prebuilt JavaScript bundles. To obtain an exact dependency SBOM, separately rebuild them from pinned source packages and compatibility-test the replacement."
+  ]
+}

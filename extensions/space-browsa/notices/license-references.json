@@ -1,0 +1,301 @@
+{
+  "schema": 1,
+  "description": "License source references, including dependency-family references for the retained parser. These versions do NOT identify the retained runtime artifacts.",
+  "references": [
+    {
+      "name": "@mixmark-io/domino",
+      "referenceVersion": "2.2.0",
+      "license": "BSD-2-Clause",
+      "referenceTarball": "https://registry.npmjs.org/@mixmark-io/domino/-/domino-2.2.0.tgz",
+      "referenceIntegrity": "sha512-Y28PR25bHXUg88kCV7nivXrP2Nj2RueZ3/l/jdx6J9f8J4nsEGcgX0Qe6lt7Pa+J79+kPiJU3LguR6O/6zrLOw==",
+      "noticeFiles": [
+        {
+          "path": "mixmark-io-domino/LICENSE",
+          "source": "https://registry.npmjs.org/@mixmark-io/domino/-/domino-2.2.0.tgz#package/LICENSE",
+          "sha256": "9672b5ea831c360425e95b806b302e502582dd9718b056f29c40cf241daecb68"
+        }
+      ],
+      "purpose": "Official license reference only; not evidence of the version included in the retained browsa bundle."
+    },
+    {
+      "name": "@mozilla/readability",
+      "referenceVersion": "0.6.0",
+      "license": "Apache-2.0",
+      "referenceTarball": "https://registry.npmjs.org/@mozilla/readability/-/readability-0.6.0.tgz",
+      "referenceIntegrity": "sha512-juG5VWh4qAivzTAeMzvY9xs9HY5rAcr2E4I7tiSSCokRFi7XIZCAu92ZkSTsIj1OPceCifL3cpfteP3pDT9/QQ==",
+      "noticeFiles": [
+        {
+          "path": "mozilla-readability/LICENSE.md",
+          "source": "https://registry.npmjs.org/@mozilla/readability/-/readability-0.6.0.tgz#package/LICENSE.md",
+          "sha256": "a5b1e8181751ce05b85b7bfaa832b785e87086250a5148e679d17ca9bdcfa958"
+        },
+        {
+          "path": "mozilla-readability/APACHE-2.0.txt",
+          "source": "https://raw.githubusercontent.com/mozilla/readability/ab4027a8b37669745016869a37a504727992b2ba/LICENSE.md",
+          "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30"
+        },
+        {
+          "path": "mozilla-readability/SOURCE-ATTRIBUTION.txt",
+          "source": "https://registry.npmjs.org/@mozilla/readability/-/readability-0.6.0.tgz#package/Readability.js (leading attribution comments)",
+          "sha256": "f96771b8363cce5efe811bce165a79a494160da31d4da988e48d698aa21cd1e3"
+        }
+      ],
+      "purpose": "Official license reference only; not evidence of the version included in the retained browsa bundle."
+    },
+    {
+      "name": "entities",
+      "referenceVersion": "8.1.0",
+      "license": "BSD-2-Clause",
+      "referenceTarball": "https://registry.npmjs.org/entities/-/entities-8.1.0.tgz",
+      "referenceIntegrity": "sha512-kxL7msIffSuh9aaFAMD7rxAIuTRMAHMeBtgHW2yUdWw732ZNh4MehkF2gdjvtdmikkaIP9bFDDJOPlsvm7avrA==",
+      "noticeFiles": [
+        {
+          "path": "entities/LICENSE",
+          "source": "https://registry.npmjs.org/entities/-/entities-8.1.0.tgz#package/LICENSE",
+          "sha256": "cb992345949ccd6e8394b2cd6c465f7b897c864f845937dbf64e8997f389e164"
+        }
+      ],
+      "purpose": "Official license reference only; not evidence of the version included in the retained browsa bundle."
+    },
+    {
+      "name": "linkify-it",
+      "referenceVersion": "6.1.0",
+      "license": "MIT",
+      "referenceTarball": "https://registry.npmjs.org/linkify-it/-/linkify-it-6.1.0.tgz",
+      "referenceIntegrity": "sha512-wJ/TwpSDTLepCrQoYWYIExIKg5Zchex2Nn5yk2mFnB+6PtdkHtyLx742md9csRjjOnGkKIS/RrbY7l8D6gT9Vw==",
+      "noticeFiles": [
+        {
+          "path": "linkify-it/LICENSE",
+          "source": "https://registry.npmjs.org/linkify-it/-/linkify-it-6.1.0.tgz#package/LICENSE",
+          "sha256": "95e3f7f0e81e9b4940cdfaa1956aaff5e4dfd2fb1565041e7c78eb9a606f23e3"
+        }
+      ],
+      "purpose": "Official license reference only; not evidence of the version included in the retained browsa bundle."
+    },
+    {
+      "name": "markdown-it-container",
+      "referenceVersion": "4.0.0",
+      "license": "MIT",
+      "referenceTarball": "https://registry.npmjs.org/markdown-it-container/-/markdown-it-container-4.0.0.tgz",
+      "referenceIntegrity": "sha512-HaNccxUH0l7BNGYbFbjmGpf5aLHAMTinqRZQAEQbMr2cdD3z91Q6kIo1oUn1CQndkT03jat6ckrdRYuwwqLlQw==",
+      "noticeFiles": [
+        {
+          "path": "markdown-it-container/LICENSE",
+          "source": "https://registry.npmjs.org/markdown-it-container/-/markdown-it-container-4.0.0.tgz#package/LICENSE",
+          "sha256": "c91339910d300f163edcaddbfb3909f1cffae19a496b7fe3935a9a4073dc305a"
+        }
+      ],
+      "purpose": "Official license reference only; not evidence of the version included in the retained browsa bundle."
+    },
+    {
+      "name": "markdown-it-footnote",
+      "referenceVersion": "4.0.0",
+      "license": "MIT",
+      "referenceTarball": "https://registry.npmjs.org/markdown-it-footnote/-/markdown-it-footnote-4.0.0.tgz",
+      "referenceIntegrity": "sha512-WYJ7urf+khJYl3DqofQpYfEYkZKbmXmwxQV8c8mO/hGIhgZ1wOe7R4HLFNwqx7TjILbnC98fuyeSsin19JdFcQ==",
+      "noticeFiles": [
+        {
+          "path": "markdown-it-footnote/LICENSE",
+          "source": "https://registry.npmjs.org/markdown-it-footnote/-/markdown-it-footnote-4.0.0.tgz#package/LICENSE",
+          "sha256": "81d61236a5f25294b2dad0c866d4ad6a40b865148b28df9a71f49ba771a6c54b"
+        }
+      ],
+      "purpose": "Official license reference only; not evidence of the version included in the retained browsa bundle."
+    },
+    {
+      "name": "markdown-it-ins",
+      "referenceVersion": "4.0.0",
+      "license": "MIT",
+      "referenceTarball": "https://registry.npmjs.org/markdown-it-ins/-/markdown-it-ins-4.0.0.tgz",
+      "referenceIntegrity": "sha512-sWbjK2DprrkINE4oYDhHdCijGT+MIDhEupjSHLXe5UXeVr5qmVxs/nTUVtgi0Oh/qtF+QKV0tNWDhQBEPxiMew==",
+      "noticeFiles": [
+        {
+          "path": "markdown-it-ins/LICENSE",
+          "source": "https://registry.npmjs.org/markdown-it-ins/-/markdown-it-ins-4.0.0.tgz#package/LICENSE",
+          "sha256": "81d61236a5f25294b2dad0c866d4ad6a40b865148b28df9a71f49ba771a6c54b"
+        }
+      ],
+      "purpose": "Official license reference only; not evidence of the version included in the retained browsa bundle."
+    },
+    {
+      "name": "markdown-it-mark",
+      "referenceVersion": "4.0.0",
+      "license": "MIT",
+      "referenceTarball": "https://registry.npmjs.org/markdown-it-mark/-/markdown-it-mark-4.0.0.tgz",
+      "referenceIntegrity": "sha512-YLhzaOsU9THO/cal0lUjfMjrqSMPjjyjChYM7oyj4DnyaXEzA8gnW6cVJeyCrCVeyesrY2PlEdUYJSPFYL4Nkg==",
+      "noticeFiles": [
+        {
+          "path": "markdown-it-mark/LICENSE",
+          "source": "https://registry.npmjs.org/markdown-it-mark/-/markdown-it-mark-4.0.0.tgz#package/LICENSE",
+          "sha256": "81d61236a5f25294b2dad0c866d4ad6a40b865148b28df9a71f49ba771a6c54b"
+        }
+      ],
+      "purpose": "Official license reference only; not evidence of the version included in the retained browsa bundle."
+    },
+    {
+      "name": "markdown-it-sup",
+      "referenceVersion": "2.0.0",
+      "license": "MIT",
+      "referenceTarball": "https://registry.npmjs.org/markdown-it-sup/-/markdown-it-sup-2.0.0.tgz",
+      "referenceIntegrity": "sha512-5VgmdKlkBd8sgXuoDoxMpiU+BiEt3I49GItBzzw7Mxq9CxvnhE/k09HFli09zgfFDRixDQDfDxi0mgBCXtaTvA==",
+      "noticeFiles": [
+        {
+          "path": "markdown-it-sup/LICENSE",
+          "source": "https://registry.npmjs.org/markdown-it-sup/-/markdown-it-sup-2.0.0.tgz#package/LICENSE",
+          "sha256": "81d61236a5f25294b2dad0c866d4ad6a40b865148b28df9a71f49ba771a6c54b"
+        }
+      ],
+      "purpose": "Official license reference only; not evidence of the version included in the retained browsa bundle."
+    },
+    {
+      "name": "markdown-it-task-checkbox",
+      "referenceVersion": "1.0.6",
+      "license": "ISC",
+      "referenceTarball": "https://registry.npmjs.org/markdown-it-task-checkbox/-/markdown-it-task-checkbox-1.0.6.tgz",
+      "referenceIntegrity": "sha512-7pxkHuvqTOu3iwVGmDPeYjQg+AIS9VQxzyLP9JCg9lBjgPAJXGEkChK6A2iFuj3tS0GV3HG2u5AMNhcQqwxpJw==",
+      "noticeFiles": [
+        {
+          "path": "markdown-it-task-checkbox/LICENSE",
+          "source": "https://registry.npmjs.org/markdown-it-task-checkbox/-/markdown-it-task-checkbox-1.0.6.tgz#package/LICENSE",
+          "sha256": "b6e486f75602c82f6939b9e04b965718cb666dfb1ba392ca0669b67fb35d1c49"
+        }
+      ],
+      "purpose": "Official license reference only; not evidence of the version included in the retained browsa bundle."
+    },
+    {
+      "name": "markdown-it-ts",
+      "referenceVersion": "1.1.2",
+      "license": "MIT",
+      "referenceTarball": "https://registry.npmjs.org/markdown-it-ts/-/markdown-it-ts-1.1.2.tgz",
+      "referenceIntegrity": "sha512-17qO3LQLK+JXom5Zt6Z9l7OGWWv9eYquTxdj3xIPGe1OBHdYXrzNYA3xCgCyIj1uItv4jkqbQf6FkaqifKkySw==",
+      "noticeFiles": [
+        {
+          "path": "markdown-it-ts/LICENSE",
+          "source": "https://registry.npmjs.org/markdown-it-ts/-/markdown-it-ts-1.1.2.tgz#package/LICENSE",
+          "sha256": "792c48c5a849a15fdf9e37e8bcf9e6d1dd13b32b46c642a748a0a46a9919d473"
+        }
+      ],
+      "purpose": "Official license reference only; not evidence of the version included in the retained browsa bundle."
+    },
+    {
+      "name": "marked",
+      "referenceVersion": "16.4.2",
+      "license": "MIT",
+      "referenceTarball": "https://registry.npmjs.org/marked/-/marked-16.4.2.tgz",
+      "referenceIntegrity": "sha512-TI3V8YYWvkVf3KJe1dRkpnjs68JUPyEa5vjKrp1XEEJUAOaQc+Qj+L1qWbPd0SJuAdQkFU0h73sXXqwDYxsiDA==",
+      "noticeFiles": [
+        {
+          "path": "marked/LICENSE.md",
+          "source": "https://registry.npmjs.org/marked/-/marked-16.4.2.tgz#package/LICENSE.md",
+          "sha256": "8e3a3f82f59a60958f56ca08f445647c32a4733dc7ca6c2c46f6eb898471ab9c"
+        }
+      ],
+      "purpose": "Official license reference only; not evidence of the version included in the retained browsa bundle."
+    },
+    {
+      "name": "markstream-core",
+      "referenceVersion": "2.0.13",
+      "license": "MIT",
+      "referenceTarball": "https://registry.npmjs.org/markstream-core/-/markstream-core-2.0.13.tgz",
+      "referenceIntegrity": "sha512-uHypWvBcaTEQ1XJQ7O1hAG4onhkrscNW0qkSTqxx592d9bykfmOmLMp10IsSqfhRLrBh7CbpzzISvBItd2cKjQ==",
+      "noticeFiles": [
+        {
+          "path": "markstream-core/LICENSE",
+          "source": "https://raw.githubusercontent.com/Simon-He95/markstream-vue/52a91e87cb80b5eb5aa510d3ef730436a609a216/license",
+          "sha256": "7b8c5f10cea970d5a66e0f76fa685c569332ae9cfa76001e6bef336041d7c530"
+        }
+      ],
+      "purpose": "Official license reference only; not evidence of the version included in the retained browsa bundle."
+    },
+    {
+      "name": "mdurl",
+      "referenceVersion": "2.1.0",
+      "license": "MIT",
+      "referenceTarball": "https://registry.npmjs.org/mdurl/-/mdurl-2.1.0.tgz",
+      "referenceIntegrity": "sha512-1+HBaOx0zi/dQWht8rNv9MYf9qqpqL/kxI0hXImU6Y547zM6Sni8BQibt7ifgMcYtQg41ao3Ivd6cnSM86inpg==",
+      "noticeFiles": [
+        {
+          "path": "mdurl/LICENSE",
+          "source": "https://registry.npmjs.org/mdurl/-/mdurl-2.1.0.tgz#package/LICENSE",
+          "sha256": "6b6a356c4337e2446841f30f3cdf7e7023af8c5260b5e347c0f987b9f6aa2644"
+        }
+      ],
+      "purpose": "Official license reference only; not evidence of the version included in the retained browsa bundle."
+    },
+    {
+      "name": "punycode.js",
+      "referenceVersion": "2.3.1",
+      "license": "MIT",
+      "referenceTarball": "https://registry.npmjs.org/punycode.js/-/punycode.js-2.3.1.tgz",
+      "referenceIntegrity": "sha512-uxFIHU0YlHYhDQtV4R9J6a52SLx28BCjT+4ieh7IGbgwVJWO+km431c4yRlREUAsAmt/uMjQUyQHNEPf0M39CA==",
+      "noticeFiles": [
+        {
+          "path": "punycode.js/LICENSE-MIT.txt",
+          "source": "https://registry.npmjs.org/punycode.js/-/punycode.js-2.3.1.tgz#package/LICENSE-MIT.txt",
+          "sha256": "483acb265f182907d1caf6cff9c16c96f31325ed23792832cc5d8b12d5f88c8a"
+        }
+      ],
+      "purpose": "Official license reference only; not evidence of the version included in the retained browsa bundle."
+    },
+    {
+      "name": "stream-markdown-parser",
+      "referenceVersion": "1.2.16",
+      "license": "MIT",
+      "referenceTarball": "https://registry.npmjs.org/stream-markdown-parser/-/stream-markdown-parser-1.2.16.tgz",
+      "referenceIntegrity": "sha512-5MEAPd3zxbwvpr8jimBMaptNOPoALvKwUOAVIzXk/92SmOppEN+ZWTinNeFcS219qFjlt08mDLGHW0MDTIlXNA==",
+      "noticeFiles": [
+        {
+          "path": "stream-markdown-parser/LICENSE",
+          "source": "https://raw.githubusercontent.com/Simon-He95/markstream-vue/52a91e87cb80b5eb5aa510d3ef730436a609a216/license",
+          "sha256": "7b8c5f10cea970d5a66e0f76fa685c569332ae9cfa76001e6bef336041d7c530"
+        }
+      ],
+      "purpose": "Official license reference only; not evidence of the version included in the retained browsa bundle."
+    },
+    {
+      "name": "turndown",
+      "referenceVersion": "7.2.4",
+      "license": "MIT",
+      "referenceTarball": "https://registry.npmjs.org/turndown/-/turndown-7.2.4.tgz",
+      "referenceIntegrity": "sha512-I8yFsfRzmzK0WV1pNNOA4A7y4RDfFxPRxb3t+e3ui14qSGOxGtiSP6GjeX+Y6CHb7HYaFj7ECUD7VE5kQMZWGQ==",
+      "noticeFiles": [
+        {
+          "path": "turndown/LICENSE",
+          "source": "https://registry.npmjs.org/turndown/-/turndown-7.2.4.tgz#package/LICENSE",
+          "sha256": "a055e3a15db4b4cbb5af381230eba085603126d7d5d8c4dae45ee85b877a9729"
+        }
+      ],
+      "purpose": "Official license reference only; not evidence of the version included in the retained browsa bundle."
+    },
+    {
+      "name": "turndown-plugin-gfm",
+      "referenceVersion": "1.0.2",
+      "license": "MIT",
+      "referenceTarball": "https://registry.npmjs.org/turndown-plugin-gfm/-/turndown-plugin-gfm-1.0.2.tgz",
+      "referenceIntegrity": "sha512-vwz9tfvF7XN/jE0dGoBei3FXWuvll78ohzCZQuOb+ZjWrs3a0XhQVomJEb2Qh4VHTPNRO4GPZh0V7VRbiWwkRg==",
+      "noticeFiles": [
+        {
+          "path": "turndown-plugin-gfm/LICENSE",
+          "source": "https://registry.npmjs.org/turndown-plugin-gfm/-/turndown-plugin-gfm-1.0.2.tgz#package/LICENSE",
+          "sha256": "a055e3a15db4b4cbb5af381230eba085603126d7d5d8c4dae45ee85b877a9729"
+        }
+      ],
+      "purpose": "Official license reference only; not evidence of the version included in the retained browsa bundle."
+    },
+    {
+      "name": "uc.micro",
+      "referenceVersion": "3.0.0",
+      "license": "MIT",
+      "referenceTarball": "https://registry.npmjs.org/uc.micro/-/uc.micro-3.0.0.tgz",
+      "referenceIntegrity": "sha512-U3PppEkleoTnIfi8BozMx3yju3qc/L6SwqWo2Sw+54PX+PX0q9I+r1Um5HCmqD7n9VDX5/v3vQH/AjA6deDdtw==",
+      "noticeFiles": [
+        {
+          "path": "uc.micro/LICENSE.txt",
+          "source": "https://registry.npmjs.org/uc.micro/-/uc.micro-3.0.0.tgz#package/LICENSE.txt",
+          "sha256": "483acb265f182907d1caf6cff9c16c96f31325ed23792832cc5d8b12d5f88c8a"
+        }
+      ],
+      "purpose": "Official license reference only; not evidence of the version included in the retained browsa bundle."
+    }
+  ]
+}

@@ -55,8 +55,9 @@ export interface Journal {
   get(): Promise<Backup | undefined>;
   put(backup: Backup): Promise<void>;
 }
-const MAX_FILE = 2 * 1024 * 1024,
-  MAX_TOTAL = 8 * 1024 * 1024;
+export const MAX_FILE_BYTES = 24 * 1024 * 1024;
+export const MAX_TOTAL_BYTES = 64 * 1024 * 1024;
+export const MAX_RELEASE_FILES = 512;
 export const decoder = new TextDecoder("utf-8", { fatal: true });
 export function validPath(path: unknown): asserts path is string {
   if (
@@ -83,6 +84,36 @@ export function validPath(path: unknown): asserts path is string {
       )
   )
     throw new Error("更新包包含保留文件名");
+}
+// Decode bounded chunks into one output buffer; avoid a recursive regexp or a
+// full-size decoded string for WASM and other large extension resources.
+function decodeBase64(content: string, byteLength: number): Uint8Array {
+  const padding = byteLength === 0 ? 0 : (3 - (byteLength % 3)) % 3;
+  const end = content.length - padding;
+  for (let i = 0; i < end; i++) {
+    const c = content.charCodeAt(i);
+    if (
+      !(
+        (c >= 65 && c <= 90) ||
+        (c >= 97 && c <= 122) ||
+        (c >= 48 && c <= 57) ||
+        c === 43 ||
+        c === 47
+      )
+    )
+      throw new Error("更新文件大小或编码无效");
+  }
+  for (let i = end; i < content.length; i++)
+    if (content[i] !== "=") throw new Error("更新文件大小或编码无效");
+  const bytes = new Uint8Array(byteLength);
+  let offset = 0;
+  for (let i = 0; i < content.length; i += 32768) {
+    const chunk = atob(content.slice(i, i + 32768));
+    for (let j = 0; j < chunk.length; j++)
+      bytes[offset++] = chunk.charCodeAt(j);
+  }
+  if (offset !== byteLength) throw new Error("更新包完整性校验失败");
+  return bytes;
 }
 export async function hash(data: Uint8Array): Promise<string> {
   return [
@@ -115,7 +146,7 @@ export async function validateRelease(
     !/^\d+\.\d+\.\d+$/.test(r.version) ||
     !Array.isArray(r.files) ||
     !r.files.length ||
-    r.files.length > 100
+    r.files.length > MAX_RELEASE_FILES
   )
     throw new Error("更新包身份或版本不匹配");
   const names = new Set<string>();
@@ -134,17 +165,14 @@ export async function validateRelease(
     if (
       !Number.isInteger(f.bytes) ||
       f.bytes < 0 ||
-      f.bytes > MAX_FILE ||
+      f.bytes > MAX_FILE_BYTES ||
       typeof f.content !== "string" ||
-      f.content.length > Math.ceil(MAX_FILE / 3) * 4 ||
-      !/^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$/.test(
-        f.content,
-      )
+      f.content.length !== Math.ceil(f.bytes / 3) * 4
     )
       throw new Error("更新文件大小或编码无效");
     total += f.bytes;
-    if (total > MAX_TOTAL) throw new Error("更新包超过大小限制");
-    const bytes = Uint8Array.from(atob(f.content), (c) => c.charCodeAt(0));
+    if (total > MAX_TOTAL_BYTES) throw new Error("更新包超过大小限制");
+    const bytes = decodeBase64(f.content, f.bytes);
     if (bytes.length !== f.bytes || (await hash(bytes)) !== f.sha256)
       throw new Error("更新包完整性校验失败");
     data[f.path] = bytes;
@@ -232,9 +260,9 @@ export async function inspect(
     m.name !== catalog.name ||
     m.manifest_version !== 3
   )
-    throw new Error("这不是 Focus Notes Demo 的目录，未修改文件");
+    throw new Error("所选目录与当前扩展身份不匹配，未修改文件");
   if (!catalog.versions.includes(m.version))
-    throw new Error("该本地版本暂不受支持，请使用商店提供的 Demo");
+    throw new Error("该本地版本不在已发布版本列表中，请选择受支持的扩展目录");
   return m.version;
 }
 async function equals(a: Uint8Array | null, b: Uint8Array | null) {

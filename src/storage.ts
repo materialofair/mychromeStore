@@ -26,24 +26,35 @@ async function transaction<T>(
     };
   });
 }
-export const journal: Journal = {
-  get: () =>
-    transaction<Backup | undefined>("readonly", (s) => s.get("backup")),
-  put: (b) => transaction<void>("readwrite", (s) => s.put(b, "backup")),
-};
-export const saveDirectory = (dir: Directory) =>
-  transaction<void>("readwrite", (s) => s.put(dir, "directory"));
-export const loadDirectory = () =>
-  transaction<Directory | undefined>("readonly", (s) => s.get("directory"));
-export async function exclusive<T>(operation: () => Promise<T>): Promise<T> {
+async function lock<T>(name: string, operation: () => Promise<T>): Promise<T> {
   if (!navigator.locks)
     throw new Error("当前浏览器不支持安全更新锁，请使用新版桌面 Edge");
   return navigator.locks.request(
-    "space-store-update",
+    name,
     { ifAvailable: true },
     async (lock) => {
       if (!lock) throw new Error("另一个商店标签页正在操作，请稍后重试");
       return operation();
     },
   );
+}
+
+function storage(prefix: string, lockName: string) {
+  return {
+    journal: {
+      get: () => transaction<Backup | undefined>("readonly", (s) => s.get(prefix + "backup")),
+      put: (backup: Backup) => transaction<void>("readwrite", (s) => s.put(backup, prefix + "backup")),
+    } satisfies Journal,
+    saveDirectory: (directory: Directory) => transaction<void>("readwrite", (s) => s.put(directory, prefix + "directory")),
+    loadDirectory: () => transaction<Directory | undefined>("readonly", (s) => s.get(prefix + "directory")),
+    exclusive: <T>(operation: () => Promise<T>) => lock(lockName, operation),
+  };
+}
+
+// Preserve the original Demo keys so existing local backups remain recoverable.
+export const { journal, saveDirectory, loadDirectory, exclusive } = storage("", "space-store-update");
+
+export function scopedStorage(extensionId: string) {
+  if (!/^[a-p]{32}$/.test(extensionId)) throw new Error("扩展 ID 无效");
+  return storage(`extension:${extensionId}:`, `space-store-update:${extensionId}`);
 }

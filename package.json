@@ -4,19 +4,27 @@
   "version": "0.1.0",
   "type": "module",
   "engines": {
-    "node": ">=22.12.0"
+    "node": ">=22.13.0"
   },
   "scripts": {
-    "dev": "npm run releases && vite --host 127.0.0.1 --port 5173 --strictPort",
+    "dev": "npm run releases && node scripts/dev.mjs",
     "releases": "node scripts/build-releases.mjs",
     "build": "npm run releases && tsc --noEmit && vite build",
     "preview": "vite preview --host 127.0.0.1 --port 5173 --strictPort",
     "test": "vitest run",
     "test:e2e": "playwright test",
-    "check": "tsc --noEmit"
+    "check": "tsc --noEmit",
+    "dev:web": "vite --host 127.0.0.1 --port 5173 --strictPort",
+    "dev:api": "tsx server/index.ts",
+    "start": "tsx server/index.ts",
+    "admin:create": "tsx server/bootstrap.ts",
+    "example": "node scripts/publishing-example.mjs",
+    "extension:key": "node scripts/extension-key.mjs",
+    "browsa:build": "node scripts/build-browsa.mjs"
   },
   "dependencies": {
-    "fflate": "0.8.3"
+    "fflate": "0.8.3",
+    "tsx": "4.23.15"
   },
   "devDependencies": {
     "@playwright/test": "1.58.2",

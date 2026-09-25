@@ -1,19 +1,22 @@
 # SPACE · 本地扩展工作台
 
-一个可以实际更新本地解压扩展的中文网站，以及配套的 **Focus Notes 专注便签** Manifest V3 Demo。
+一个包含开发者上传、审核发布和公开下载的中文扩展商店，以及配套的 **Focus Notes 专注便签** Manifest V3 Demo。本地更新面板目前仅接入该 Demo。
 
-保留第一次手动加载的方式；日常更新由网站在你授权的原始扩展目录中完成。无需管理员权限，不配置企业策略。网站不上传本地文件或笔记。
+保留第一次手动加载的方式；日常更新由网站在你授权的原始扩展目录中完成。无需管理员权限，不配置企业策略。本地更新操作不上传你的目录或笔记；开发者主动提交的 ZIP 会上传到发布后台。
 
 ## 本机启动
 
-需要 Node.js 22.12+（推荐 Node 24 LTS）和桌面版 Edge / Chrome。
+需要 Node.js 22.13+（推荐 Node 24 LTS）和桌面版 Edge / Chrome。
 
 ```bash
 npm ci
+npm run admin:create  # 首次运行：终端交互创建管理员
 npm run dev
 ```
 
-打开 **http://localhost:5173**。默认也允许 http://127.0.0.1:5173，但这两个来源的目录授权和备份各自独立，建议始终使用同一个地址。
+打开 **http://localhost:5173**。发布中心在 **http://localhost:5173/publish.html**。默认后台只接受 localhost 来源；请始终使用同一个地址，避免登录来源和目录授权不一致。
+
+管理员在发布中心创建开发者、审核员账号。开发者提交 ZIP，审核员批准后才会公开；每个版本单独审核，不能批准自己的上传。详细步骤与上传示例见 [上传与审核指南](docs/publishing.md)。
 
 ## 体验完整更新
 
@@ -30,6 +33,9 @@ npm run dev
 
 ## 已实现
 
+- 管理员建号、角色授权、开发者上传、逐版本审核与下架。
+- 多扩展公开目录；未批准版本的 ZIP 和 JSON 不对外开放。
+- 私有数据库保存扩展包和审核记录；会话、CSRF、上传限额及结构验证。
 - 响应式扩展目录、搜索、「我的扩展」和安装指南。
 - 原生目录选择与授权，IndexedDB 保存目录句柄。
 - 区分文件版本与运行版本；只有扩展回应目标版本才显示运行新版。
@@ -41,24 +47,27 @@ npm run dev
 
 ## 部署到自己的 HTTPS 域名
 
-这是静态站点，不需要数据库。**先确定域名，再生成扩展包**。以下为 macOS/Linux shell 示例：
+完整商店需要 Node 后端与 SQLite。**先确定域名，再构建并启动服务**。以下为 macOS/Linux shell 示例：
 
 ```bash
 STORE_ORIGIN=https://extensions.example.com npm run build
+TRUST_PROXY=1 STORE_ORIGIN=https://extensions.example.com npm start
 ```
 
 PowerShell：
 
 ```powershell
 $env:STORE_ORIGIN = "https://extensions.example.com"
+$env:TRUST_PROXY = "1" # 使用示例 Nginx 反向代理时
 npm run build
+npm start
 ```
 
-将 `dist/` 内容托管到该 HTTPS 域名的**网站根路径**。不是 `file://`，也不是普通 HTTP 局域网 IP。`STORE_ORIGIN` 必须为完整来源、不含路径或末尾 `/`。该构建的 Demo 只允许配置的来源；网站和下载的扩展包必须来自同一次构建。
+通过 HTTPS 反向代理转发到本机 8787，后端提供 `dist/` 和 API，部署在该域名的**网站根路径**。不是 `file://`，也不是普通 HTTP 局域网 IP。`STORE_ORIGIN` 必须为完整来源、不含路径或末尾 `/`。该构建的 Demo 只允许配置的来源；网站和下载的扩展包必须来自同一次构建。
 
 发布域名变化后，旧 Demo 的通信来源不会自动改变。请使用新域名构建的 ZIP，首次重新加载/接入一次。不要直接用旧部署地址的已安装包去更新新部署生成的不同内容——本地文件完整性校验会阻止覆盖。
 
-示例托管头部见 `deploy/nginx.conf`。正式供同事使用前可在反向代理层接入企业允许的访问控制；本版本没有账号或上传后台。普通网页登录可用于这个网页主动下载方案，它不使用 Edge 原生 update_url 协议。
+示例托管头部见 `deploy/nginx.conf`。正式供同事使用前可在反向代理层接入企业允许的访问控制；账号、上传与审核由发布中心管理。普通网页登录可用于这个网页主动下载方案，它不使用 Edge 原生 update_url 协议。
 
 ## 开发与验证
 
@@ -86,6 +95,8 @@ node scripts/manual-browser-proof.mjs
 ## 项目结构
 
 ```text
+server/                    账号、上传、审核 API 与私有数据库
+src/publish.ts / publish.css 发布中心页面
 src/core.ts                文件校验、备份事务、更新与恢复
 src/storage.ts             IndexedDB 与跨标签页互斥
 src/bridge.ts              网站与扩展的通信/运行版本确认
@@ -101,7 +112,7 @@ tests/                    单元、故障注入与浏览器测试
 
 ## 适用边界
 
-- 当前是单个自有 Demo 的完整 MVP；接入其他扩展需要其身份、版本文件清单和对应通信代码，不能任意管理第三方扩展。
+- 发布中心支持多个经过审核的 MV3 扩展。每个已发布扩展都有独立的安装与更新页，目录和备份按扩展 ID 隔离。首次需手动加载；未集成桥接的扩展更新文件后需手动重载。
 - 两个版本公用模板，通过 manifest 版本启用 1.1 的主题功能。这是明确的演示方式；生产发布应保存不可变的每版源码/构建产物，不能重写历史版本。
 - 目录写入不是原子操作。请勿在更新中手动改文件或重载扩展；异常时优先恢复。恢复备份只保留最近一次事务，不包括浏览器笔记存储。
 - 备份位于本站 IndexedDB；清理站点数据、无痕窗口关闭或存储被系统回收会丢失。重要更新前可下载备份，保留原始 ZIP；不保证无条件恢复。
@@ -112,3 +123,13 @@ tests/                    单元、故障注入与浏览器测试
 ## 开源协议
 
 本项目采用 [MIT License](LICENSE)，允许使用、修改和分发；分发时请保留版权声明和许可文本。
+
+## SPACE AI / browsa
+
+已提供保留 browsa 侧栏与原模型配置的独立适配包，支持自定义 OpenAI-compatible Base URL、模型和 API Key。
+
+```sh
+npm run browsa:build
+```
+
+产物位于 `.data/packages/space-browsa-1.0.0.zip`，通过发布中心上传并独立审核后公开。详细构建、安装和配置见 [SPACE AI 指南](extensions/space-browsa/README.md)。上游 MIT 与第三方许可随包保留，不将第三方组件统一重新许可为 MIT。

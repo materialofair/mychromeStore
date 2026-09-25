@@ -1,0 +1,11 @@
+# Retained browsa vendor notices
+
+These files accompany the unchanged third-party artifacts listed in `manifest.json`, copied from browsa commit `7f6df4b8712a40214a358c34483982b7e774f4b8`. The manifest records their exact archive paths and SHA-256 hashes. Include this whole directory as `notices/` in the extension ZIP; do not replace the individual component licenses with the SPACE project's MIT license.
+
+The six JavaScript bundles do not identify their original package versions. The pinned browsa tree contains neither the original `build/_deps` package lock nor the Readability source used to produce them. Their versions are therefore explicitly unknown. `license-references.json` records the official npm tarballs or pinned official repository files from which license text was obtained; its `referenceVersion` fields are **license-source references, not assertions about the shipped JavaScript versions**.
+
+Complete license texts are retained for Readability (Apache-2.0, with original Arc90 source attribution), Turndown and its GFM plugin, marked, markstream-core and stream-markdown-parser. Additional official dependency-family notices accompany the parser and Turndown: BSD-2-Clause, MIT and ISC texts retain their respective copyright holders. The Readability npm package contains an attribution notice rather than the full Apache terms, so both that notice and a full Apache-2.0 text from Mozilla's pinned repository are included.
+
+The Space Grotesk font identifies itself in its OpenType name table as **Version 2.000**, copyright 2020 The Space Grotesk Project Authors. Its complete SIL Open Font License 1.1 is copied from the font project's pinned repository. The font binary is unmodified.
+
+The source lockfile's `npm audit` result does not cover these retained prebuilt bundles. Their exact historic transitive dependency graph cannot be reconstructed from the available build metadata, and the reference inventory must not be represented as a verified runtime SBOM. Obtaining that requires separately rebuilding from locked source packages and testing compatibility. Updating an artifact requires revisiting its provenance and notices, rather than silently reusing its recorded hash.
