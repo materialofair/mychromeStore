@@ -132,4 +132,4 @@ tests/                    单元、故障注入与浏览器测试
 npm run browsa:build
 ```
 
-产物位于 `.data/packages/space-browsa-1.0.0.zip`，通过发布中心上传并独立审核后公开。详细构建、安装和配置见 [SPACE AI 指南](extensions/space-browsa/README.md)。上游 MIT 与第三方许可随包保留，不将第三方组件统一重新许可为 MIT。
+产物位于 `.data/packages/space-browsa-1.0.1.zip`，通过发布中心上传并独立审核后公开。详细构建、安装和配置见 [SPACE AI 指南](extensions/space-browsa/README.md)。上游 MIT 与第三方许可随包保留，不将第三方组件统一重新许可为 MIT。

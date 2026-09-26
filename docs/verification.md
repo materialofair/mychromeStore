@@ -91,3 +91,16 @@
 - 最终产物 369 文件、10,277,664 字节。默认时区与 `TZ=UTC` 各构建一次，`cmp` 一致；SHA-256：`0d7b8956ae9468e39369e85eed5216adb508d997e2a2fc3a431232cb95c0b4c6`。
 
 测试边界：browsa 的浏览器文件写入使用 OPFS，真实已加载扩展的文件替换/重载另行验证；没有把二者描述为 Windows Edge 原生目录选择器的端到端验收。视频、ASR、所有外部站点及远程 Agent 未逐一联调。保留的六个上游预编译 JS bundle 版本未知，按 commit 和文件哈希固定；npm audit 不覆盖它们，许可与来源见 `extensions/space-browsa/notices/`。
+
+
+## SPACE AI 1.0.1 阅读体验验收（2026-09-25）
+
+- `npm run build`、`npm run check`、`git diff --check`：通过。
+- `npm test`：113/113 通过；`CHROMIUM_PATH=<Chrome for Testing 148 路径> npm run test:e2e`：11/11 通过。
+- `npm run browsa:build`：上游模型测试 72/72 通过；`npm audit --audit-level=moderate` 与构建配方依赖审计均为 0 条已知漏洞。
+- 真实加载最终扩展包，验证 TXT/Markdown/PDF 添加、删除、解析状态、草稿保护、实际模型请求内容、当前页面总结、资料折叠及历史恢复、键盘选区、窄窗口位置、编辑区排除与 Escape 取消。模型请求使用隔离的本地模拟 SSE 服务，不使用用户密钥。
+- 真实 1.0.0 到 1.0.1 的目录覆盖与扩展重载测试保留模型配置和聊天记录；平台上传审批、更新与恢复回归通过。代码及最终展示增量独立复审均 APPROVE。
+- 平台 `parsePackage` 校验最终 ZIP 通过：版本 1.0.1，固定 ID `jjehpfemjinjjbffcccknjlafkcknpep`，372 文件，10,289,179 字节，SHA-256 `d0de3bc00248359f4d2b45687b35467507b65d6ad1004e3f36a8a4e6233c56de`。
+- 已复制到 `/Users/WangQiao/Downloads/SPACE-AI-1.0.1` 及同名 ZIP，核对哈希；未覆盖用户原 1.0.0 目录。
+
+边界：本轮验证 macOS Chrome，Windows Edge 未实机验证。PDF 不含 OCR；文本类附件最多 5 个、单个 10 MiB、合计 100,000 字符，PDF 最多 100 页。远程模型服务及所有网站未逐一测试；上游预编译 bundle 的审计限制仍适用。

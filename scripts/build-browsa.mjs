@@ -5,11 +5,24 @@ import { resolve, join, dirname } from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import { createHash } from 'node:crypto';
 import { zipSync } from 'fflate';
+import { applyReadingPatch } from '../extensions/space-browsa/reading-patch.mjs';
+import { applyAttachmentsPatch } from '../extensions/space-browsa/attachments-patch.mjs';
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const recipe = join(root, 'extensions/space-browsa');
 const upstream = JSON.parse(await readFile(join(recipe, 'upstream.json'), 'utf8'));
 const identity = JSON.parse(await readFile(join(recipe, 'identity.json'), 'utf8'));
+async function recipeFiles(dir, prefix = '') {
+  const output = {};
+  for (const entry of await readdir(dir, { withFileTypes: true })) {
+    if (entry.name === 'node_modules') continue;
+    const path = prefix + entry.name;
+    if (entry.isDirectory()) Object.assign(output, await recipeFiles(join(dir, entry.name), path + '/'));
+    else if (entry.isFile()) output[path] = createHash('sha256').update(await readFile(join(dir, entry.name))).digest('hex');
+  }
+  return Object.fromEntries(Object.entries(output).sort(([a], [b]) => a < b ? -1 : a > b ? 1 : 0));
+}
+const recipeHashes = await recipeFiles(recipe);
 const originInput = process.env.STORE_ORIGIN || 'http://localhost:5173';
 const url = new URL(originInput);
 if (url.origin !== originInput || url.username || url.password ||
@@ -33,6 +46,8 @@ const archive = execFileSync('git', ['archive', upstream.commit], { cwd: cache, 
 const work = await mkdtemp(join(root, '.data/browsa-build-'));
 try {
   execFileSync('tar', ['-xf', '-', '-C', work], { input: archive });
+  await applyReadingPatch(work);
+  await applyAttachmentsPatch(work);
   for (const file of ['package.json', 'package-lock.json']) await cp(join(recipe, file), join(work, file));
   const npmCommand = process.env.npm_execpath
     ? args => command(process.execPath, [process.env.npm_execpath, ...args], work)
@@ -118,6 +133,7 @@ try {
   }
   files['SPACE-LICENSE'] = await readFile(join(root, 'LICENSE'));
   files['SPACE-PROVENANCE.json'] = Buffer.from(JSON.stringify({ ...upstream, version, extensionId: identity.extensionId, storeOrigin: url.origin,
+    recipeHashes,
     lockSha256: createHash('sha256').update(await readFile(join(recipe, 'package-lock.json'))).digest('hex') }, null, 2));
   // An existing output may be loaded in a browser. Never overwrite it silently.
   if (existsSync(output) || existsSync(output + '.zip')) throw new Error(`Output already exists: ${output}. Move it or choose a new version.`);
