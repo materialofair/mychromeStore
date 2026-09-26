@@ -4,10 +4,11 @@ import { existsSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join, resolve } from 'node:path';
 
-test('SPACE 1.0.0 upgrades to the real reading 1.0.1 package without losing settings or history', async () => {
+test('SPACE 1.0.1 upgrades to the current package without losing settings or history', async () => {
   test.setTimeout(45000);
-  const old = resolve('.data/packages/space-browsa-1.0.0');
-  const next = resolve('.data/packages/space-browsa-1.0.1');
+  const { version } = JSON.parse(await readFile('extensions/space-browsa/upstream.json', 'utf8'));
+  const old = resolve('.data/packages/space-browsa-1.0.1');
+  const next = resolve(`.data/packages/space-browsa-${version}`);
   test.skip(!existsSync(old) || !existsSync(next), 'Requires both released local packages');
   const root = await mkdtemp(join(tmpdir(), 'space-upgrade-'));
   const extension = join(root, 'extension'); await cp(old, extension, { recursive: true });
@@ -27,13 +28,14 @@ test('SPACE 1.0.0 upgrades to the real reading 1.0.1 package without losing sett
     await options.evaluate(value => (window as any).chrome.storage.local.set(value), saved);
     const store = await context.newPage(); await store.goto('http://localhost:5173');
     await cp(next, extension, { recursive: true });
-    await store.evaluate(id => (window as any).chrome.runtime.sendMessage(id, { scope: 'space-store/v1', type: 'RELOAD', version: '1.0.1' }), id);
+    await store.evaluate(({ id, version }) => (window as any).chrome.runtime.sendMessage(id, { scope: 'space-store/v1', type: 'RELOAD', version }), { id, version });
     await expect.poll(async () => {
       try { return await store.evaluate(async id => (await (window as any).chrome.runtime.sendMessage(id, { scope: 'space-store/v1', type: 'PING' })).version, id); }
       catch { return ''; }
-    }).toBe('1.0.1');
+    }).toBe(version);
     const updated = await context.newPage(); await updated.goto(`chrome-extension://${id}/sidepanel.html`);
     await expect(updated.locator('#space-add-files')).toBeVisible();
+    await expect(updated.locator('#space-network-open')).toBeVisible();
     expect(await updated.evaluate(() => (window as any).chrome.storage.local.get(['providers', 'activeProvider', 'history']))).toEqual(saved);
   } finally { await context.close(); await rm(root, { recursive: true, force: true }); }
 });

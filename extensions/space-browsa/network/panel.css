@@ -1,0 +1,18 @@
+/* SPACE network log: captured content stays inside the drawer width. */
+#space-network-open { align-self: flex-end; flex-shrink: 0; width: auto; margin: 4px 12px; white-space: nowrap; font-size: 12px; padding: 4px 8px; }
+#space-network { box-sizing: border-box; width: calc(100% - 16px); max-width: 900px; max-height: calc(100dvh - 24px); padding: 16px; border: 1px solid var(--border, #bbb); border-radius: 12px; color: var(--fg, #222); background: var(--bg, #fff); overflow: auto; font-size: 13px; }
+#space-network::backdrop { background: #0006; }
+#space-network .space-network-heading { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+#space-network h2 { margin: 0; font-size: 18px; }
+#space-network p { line-height: 1.6; overflow-wrap: anywhere; }
+#space-network [data-status] { white-space: pre-wrap; }
+#space-network [data-error] { color: #bd3022; }
+#space-network .space-network-help { opacity: .75; font-size: 12px; }
+#space-network .space-network-actions { display: flex; flex-wrap: wrap; gap: 8px; }
+#space-network button { color: inherit; background: var(--bg, #fff); border: 1px solid var(--border, #aaa); border-radius: 6px; padding: 7px 10px; cursor: pointer; font: inherit; }
+#space-network button:disabled { opacity: .45; cursor: default; }
+#space-network .space-network-record { display: grid; grid-template-columns: 20px minmax(0, 1fr); gap: 6px; border-top: 1px solid var(--border, #ddd); padding: 12px 0; align-items: start; }
+#space-network summary { cursor: pointer; overflow-wrap: anywhere; white-space: pre-wrap; line-height: 1.6; }
+#space-network pre { white-space: pre-wrap; overflow-wrap: anywhere; font-size: 12px; max-height: 420px; overflow: auto; background: #8881; padding: 8px; }
+#space-network .space-network-analysis { display: block; margin: 12px 0; line-height: 1.6; }
+#space-network textarea { display: block; box-sizing: border-box; width: 100%; margin-top: 6px; color: inherit; background: inherit; border: 1px solid var(--border, #aaa); border-radius: 6px; padding: 8px; }

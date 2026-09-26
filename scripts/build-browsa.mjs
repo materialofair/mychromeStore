@@ -7,6 +7,7 @@ import { createHash } from 'node:crypto';
 import { zipSync } from 'fflate';
 import { applyReadingPatch } from '../extensions/space-browsa/reading-patch.mjs';
 import { applyAttachmentsPatch } from '../extensions/space-browsa/attachments-patch.mjs';
+import { applyNetworkPatch } from '../extensions/space-browsa/network-patch.mjs';
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const recipe = join(root, 'extensions/space-browsa');
@@ -48,6 +49,7 @@ try {
   execFileSync('tar', ['-xf', '-', '-C', work], { input: archive });
   await applyReadingPatch(work);
   await applyAttachmentsPatch(work);
+  await applyNetworkPatch(work);
   for (const file of ['package.json', 'package-lock.json']) await cp(join(recipe, file), join(work, file));
   const npmCommand = process.env.npm_execpath
     ? args => command(process.execPath, [process.env.npm_execpath, ...args], work)

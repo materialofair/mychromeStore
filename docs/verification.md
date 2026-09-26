@@ -1,5 +1,52 @@
 # 验证记录
 
+## 2026-09-26 SPACE AI 1.0.2 网络请求日志
+
+实现手动开始/停止当前标签页 HTTP(S) 采集、请求详情、全选/单选、全部/选中 Markdown 导出、选中日志附加到聊天，以及可选的独立分析备注。Cookie、Authorization、Token 按用户要求保留采集原值。采集和导出不调用模型；只有聊天发送才交给配置的模型。
+
+### 本次验证
+
+| 命令 | 本次结果 |
+| --- | --- |
+| `npx vitest run tests/network-log.test.ts tests/browsa-bridge.test.ts tests/reading-patch.test.ts tests/attachments.test.ts` | 4 个文件，58 项通过 |
+| `npm test` | 10 个文件，130 项通过 |
+| `npm run check` | TypeScript 通过 |
+| `npm audit --audit-level=moderate` | 0 vulnerabilities |
+| `npm run browsa:build` | 完整 1.0.2 构建成功；锁定依赖审计 0 vulnerabilities；72 项上游模型测试通过 |
+| `CHROMIUM_PATH='<测试浏览器绝对路径>' npx playwright test tests/e2e/network.spec.ts tests/e2e/reading.spec.ts tests/e2e/reading-upgrade.spec.ts tests/e2e/reading-selection.spec.ts` | 最终构建上 5/5 通过，无跳过 |
+| `git diff --check` | 通过 |
+
+浏览器为 macOS Chromium 148.0.7778.96，路径 `/Users/WangQiao/Library/Caches/ms-playwright/chromium-1223/chrome-mac-arm64/Google Chrome for Testing.app/Contents/MacOS/Google Chrome for Testing`。默认 Playwright 1208 缓存缺失，使用上述已安装测试浏览器。全程使用临时扩展副本、独立浏览器资料、本地 HTTP 接口及假凭证。
+
+- 实际 CDP 验证 HttpOnly Cookie、Authorization、请求/响应 JSON、额外响应头原值、重定向、请求失败、停止时未完成的流式响应、其他标签页不混入、选中/全部下载、侧栏刷新恢复日志和清空。
+- 验证网络内容安全显示为文本，Markdown 使用可容纳内嵌反引号的代码围栏；附件仅在点击发送后交给本地模拟模型，原始日志不混入分析备注。
+- 单测另覆盖 ExtraInfo 早到/迟到、重定向归属、迟到请求体拒绝错误归属、待响应请求头、正文读取失败、Base64、超限、并发启动、后台中断、缓存失败及停止超时后的迟到回调。
+- 360px 窄窗口和不支持的目标页错误状态检查通过。截图：`test-results/space-network-1.0.2-narrow.png`、`test-results/space-network-1.0.2-error.png`。网络入口独立置于顶栏下，原设置入口仍完整可见。
+- 从实际 1.0.1 包升级到本次 1.0.2 包并重载，模型配置和历史保留；阅读、附件和选区回归通过。桥接仍只开放既有 PING/RELOAD。
+- 对 ZIP 与可加载目录逐文件比对一致，全部配方文件哈希与 `SPACE-PROVENANCE.json` 匹配。测试生成的 Focus Notes ZIP 与 HEAD 解压内容完全相同，已恢复仅时间戳造成的无关变化。
+
+### 产物与边界
+
+- 可加载目录：`.data/packages/space-browsa-1.0.2/`
+- ZIP：`.data/packages/space-browsa-1.0.2.zip`，10,299,746 字节，375 个文件。
+- SHA-256：`c0059609f5b63de4220f1b8e016ae8e864264a0d92aecded19fd87569a3f2c81`
+- 固定扩展 ID：`jjehpfemjinjjbffcccknjlafkcknpep`；商店来源 `http://localhost:5173`；新增 `debugger` 权限。
+- 一次一个目标标签页；日志保存在 `chrome.storage.session` 内存中，浏览器或扩展重启/重载会清空；关闭日志窗口本身不会停止采集。应先停止并导出。
+- 最多 200 条，单项正文 256,000 字符，单组元数据 32,000 字符，总采集文本预算 2,000,000 字符。附加到聊天沿用现有文档配额，不等同于模型上下文保证。
+- 不回溯开始前请求，不覆盖跨进程 iframe、独立 Worker、WebSocket 帧；文件上传、二进制、缓存和流式正文可能不完整，界面和 Markdown 标明实际缺失/截断状态。不会重发请求补取内容。
+- 未实测 Windows Edge、企业策略环境、真实外部模型服务；依赖审计不覆盖全部上游预编译 vendor。本次没有提交、推送、审批、发布，也没有修改用户正在加载的扩展目录。
+
+### 改动文件
+
+- `extensions/space-browsa/network/recorder.js`：采集、生命周期、预算、临时缓存和消息权限。
+- `extensions/space-browsa/network/markdown.js`：原始日志与独立备注的 Markdown 导出。
+- `extensions/space-browsa/network/panel.js`、`extensions/space-browsa/network/panel.css`：侧栏入口、日志详情、选择、下载和聊天附件。
+- `extensions/space-browsa/network-patch.mjs`、`scripts/build-browsa.mjs`：锚点校验、权限和可追踪构建接入。
+- `extensions/space-browsa/upstream.json`、`extensions/space-browsa/README.md`：1.0.2 版本和使用说明。
+- `tests/network-log.test.ts`、`tests/e2e/network.spec.ts`：网络单测与实际扩展验收。
+- `tests/e2e/reading.spec.ts`、`tests/e2e/reading-upgrade.spec.ts`：从当前配方读取目标版本，验证实际新包和升级。
+- `docs/verification.md`：本次证据与边界。
+
 ## 2026-09-25 发布中心阶段验证（历史记录）
 
 - `npm run build`：包含 publish.html 的多页生产构建与 TypeScript 检查通过。

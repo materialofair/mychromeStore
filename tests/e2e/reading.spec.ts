@@ -19,8 +19,9 @@ function pdf(text: string) {
 
 test('SPACE reading: documents, removal, protected draft, current page summary and keyboard selection', async () => {
   test.setTimeout(120000);
-  const source = resolve('.data/packages/space-browsa-1.0.1');
-  test.skip(!existsSync(source), 'Run npm run browsa:build to generate 1.0.1');
+  const { version } = JSON.parse(await readFile('extensions/space-browsa/upstream.json', 'utf8'));
+  const source = resolve(`.data/packages/space-browsa-${version}`);
+  test.skip(!existsSync(source), 'Run npm run browsa:build to generate the current package');
   const calls: any[] = [];
   const server = createServer(async (req, res) => {
     let body = ''; for await (const chunk of req) body += chunk;
@@ -99,7 +100,7 @@ test('SPACE reading: documents, removal, protected draft, current page summary a
     await panel.reload();
     await expect(panel.locator('details.space-reading-material')).toHaveCount(2);
     await expect(panel.locator('details.space-reading-material[open]')).toHaveCount(0);
-    await panel.screenshot({ path: 'test-results/space-reading-1.0.1.png' });
+    await panel.screenshot({ path: `test-results/space-reading-${version}.png` });
     await article.bringToFront();
     await article.setViewportSize({ width: 320, height: 720 });
     const cdp = await context.newCDPSession(article);
