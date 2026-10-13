@@ -11,7 +11,7 @@ npm ci
 npm run browsa:build
 ```
 
-输出 `.data/packages/space-browsa-1.0.2/`（可加载目录）及同名 ZIP。首次构建下载固定源码和锁定依赖，运行依赖审计、重建 npm 支持的 vendor，并运行模型相关 72 项上游测试。构建保留其它上游预编译 vendor；其身份与许可见 `notices/`。`npm audit` 不覆盖这些预编译文件，不代表全部上游代码已完成安全审计。
+输出 `.data/packages/space-browsa-1.0.7/`（可加载目录）及同名 ZIP。首次构建下载固定源码和锁定依赖，运行依赖审计、重建 npm 支持的 vendor，并运行模型相关 72 项上游测试。构建保留其它上游预编译 vendor；其身份与许可见 `notices/`。`npm audit` 不覆盖这些预编译文件，不代表全部上游代码已完成安全审计。
 
 线上部署必须将构建来源设为实际商店的精确 HTTPS origin（不带路径或末尾斜杠）：
 
@@ -21,7 +21,7 @@ STORE_ORIGIN=https://extensions.example.com npm run browsa:build
 
 默认仅允许 `http://localhost:5173`。桥接只支持身份/版本查询和重新加载，不暴露 API Key、聊天或页面数据。`identity.json` 是固定公钥，不是秘密，也不能作为上传者身份凭据。不要在版本间更换它；上传和审核由平台账户权限控制。
 
-后续适配版本：`SPACE_BROWSA_VERSION=1.0.3 npm run browsa:build`。已有输出不会被覆盖，避免误改浏览器正在加载的文件夹。如需重建同版，先把旧产物移到其它位置；商店中使用过的版本号不能重新上传。
+后续适配版本：`SPACE_BROWSA_VERSION=1.0.8 npm run browsa:build`。已有输出不会被覆盖，避免误改浏览器正在加载的文件夹。如需重建同版，先把旧产物移到其它位置；商店中使用过的版本号不能重新上传。
 
 ## 发布和安装
 
@@ -73,3 +73,34 @@ Key 保存在该扩展的 `chrome.storage.local`，并发送给用户配置的�
 - 本版采集开始记录后的目标页 HTTP(S) 请求；不回溯历史，不抓取跨进程 iframe、独立 Worker 或 WebSocket 帧。缓存、重定向、流式响应和文件上传可能没有完整正文；不重新发送请求来补取内容。
 
 实现位于 `network/`，由 `network-patch.mjs` 应用并纳入 `SPACE-PROVENANCE.json` 的配方哈希。更新时保持固定扩展身份和模型设置，不替换用户正在加载的目录。
+
+## 1.0.3 AI UI
+
+快捷栏「AI UI」为草稿附加显式 `space-ui` 输出约定，完成回复后可打开隔离交互预览。支持计数、展开/收起、输入和本地表单回显；模型任意脚本被移除，不允许外部资源或扩展操作。详见 [使用约定、安全边界与验证](../../docs/ai-ui.md)。构建默认产物为 `.data/packages/space-browsa-1.0.3/`，权限不增加，主页面脚本 CSP 保持原值，只开放本地 sandbox frame。
+
+
+## 1.0.4 有界交互程序
+
+在1.0.3隔离预览基础上，模型现在可以生成HTML、内联CSS与`application/space-ui+json`程序，组合状态、数学表达式、输入事件、有限循环、Canvas曲线和模拟tick。运行器没有计算器/图表/模拟模板分支，均由模型程序定义。支持停止、单步、重置和手动将显示结果放入草稿；对话修改返回完整新版本，旧消息保持可用。普通聊天模型沿用用户当前provider/API/model，不新增模型调用。
+
+该契约不是任意JavaScript或完整ChatGPT Canvas兼容层；JSON运算语言、支持范围、预算与fixture验证详见[AI UI契约](../../docs/ai-ui.md)。默认产物为1.0.4，1.0.3包保留；无新增权限或主扩展CSP放宽。
+
+
+## 1.0.5 真实模型渲染修复
+
+修复 DeepSeek 返回普通 `html` 代码块时只显示源码的问题：包含 `application/space-ui+json` 程序声明的完整 HTML 块也进入既有隔离预览。完成后默认显示预览，源码折叠保留，仍可展开及复制；普通 HTML 示例继续显示代码。取消、截断和未完成回复继续禁止预览。窄窗口输入框遵循边框盒布局，保留有界内联 flex 样式。
+
+已通过临时代理进行真实 `deepseek-flash` 流式联调，代理仅在进程内存中使用临时 key，扩展测试 profile 仅保存假 key，结束后清除。无真实公司资料或日常浏览器 profile；具体证据和边界见 [AI UI 验证](../../docs/ai-ui.md)。新包保留固定 ID，原 1.0.4 不覆盖。请通过商店更新实际加载目录，或备份原目录后将新版文件复制进去并在扩展管理页重新加载；不要卸载扩展，以保留模型设置及历史。
+
+
+## 1.0.6 完整 HTML/CSS/JS 工具
+
+AI UI 现在要求模型返回自包含的HTML页面，支持style、真正JavaScript、DOM事件、Canvas/SVG和动画，不再用JSON运算语言约束新工具。模型代码在manifest sandbox内部的独立srcdoc子页面运行；主扩展脚本CSP不增加inline/eval，frame-src仅开放self加载内置sandbox；permissions/host_permissions不增加，sandbox单独允许inline脚本，外部代码、网络资源、导航、弹窗及扩展API不开放。
+
+聊天内直接操作，点放大/缩小使用同一iframe。工具通过 `spaceTool.loadState/saveState/setResult/onPause` 接入本地状态保存；收起、重开侧栏、归档恢复及浏览器重启后恢复最近成功保存的应用数据，模拟默认暂停。SDK每次JSON数据不超过约60,000字符，后台快照128KiB、全部工具2MiB；容量/保存错误明确显示，不能保证意外崩溃前最后一次未确认改动已保存。任意JS闭包和DOM内存不会自动序列化；不接入SDK的页面只补充表单恢复，不声称完整恢复应用状态。旧声明式和JSON程序仍走旧运行器。
+
+点“把结果发给AI”查看结果，可附加问题后“发送给AI”解释或“修改这个工具”；确认后沿当前模型管线发送一次，并合并当前草稿及已选附件。新版本是新的工具消息，旧版及状态保留；错误新版不会覆盖旧版。生成内容仅是参考，模型不能直接触发聊天发送或读取模型配置。
+
+已使用真实deepseek-flash生成计算器、动态图表、物理模拟，原样回复作为测试fixture在隔离浏览器执行；详细命令、实际结果和安装包哈希见 [AI UI验证记录](../../docs/ai-ui.md)。1.0.7 修正默认思考模式中草稿代码干扰最终工具识别；只解析最终回答，代码内的字面标签保留。安装包为 `.data/packages/space-browsa-1.0.7.zip`，旧包保留。首次手动加载或在备份后更新实际加载目录，再重新加载扩展；不要卸载，以保留模型设置和历史。
+
+原生JS同步死循环仍可能阻塞所在浏览器线程，iframe不等于CPU配额或可强杀进程；停止控制覆盖普通定时器/动画及协作式暂停，不承诺恶意任意代码硬中断。外部库/Worker未开放，图表使用模型自写Canvas/SVG，不提供任意CDN加载。Windows Edge和用户日常profile尚未实测。

@@ -1,0 +1,2 @@
+# Preserve verbatim model responses used as regression fixtures.
+tests/fixtures/tools/deepseek-*.md -text whitespace=-blank-at-eol

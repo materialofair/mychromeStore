@@ -7,6 +7,9 @@ import { createHash } from 'node:crypto';
 import { zipSync } from 'fflate';
 import { applyReadingPatch } from '../extensions/space-browsa/reading-patch.mjs';
 import { applyAttachmentsPatch } from '../extensions/space-browsa/attachments-patch.mjs';
+import { applyAiUiPatch } from '../extensions/space-browsa/ai-ui-patch.mjs';
+import { applyToolStatePatch } from '../extensions/space-browsa/tool-state-patch.mjs';
+import { applyToolRevisionsPatch } from '../extensions/space-browsa/tool-revisions-patch.mjs';
 import { applyNetworkPatch } from '../extensions/space-browsa/network-patch.mjs';
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
@@ -50,6 +53,9 @@ try {
   await applyReadingPatch(work);
   await applyAttachmentsPatch(work);
   await applyNetworkPatch(work);
+  await applyAiUiPatch(work);
+  await applyToolStatePatch(work);
+  await applyToolRevisionsPatch(work);
   for (const file of ['package.json', 'package-lock.json']) await cp(join(recipe, file), join(work, file));
   const npmCommand = process.env.npm_execpath
     ? args => command(process.execPath, [process.env.npm_execpath, ...args], work)
