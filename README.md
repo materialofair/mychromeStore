@@ -132,4 +132,11 @@ tests/                    单元、故障注入与浏览器测试
 npm run browsa:build
 ```
 
-产物位于 `.data/packages/space-browsa-1.0.1.zip`，通过发布中心上传并独立审核后公开。详细构建、安装和配置见 [SPACE AI 指南](extensions/space-browsa/README.md)。上游 MIT 与第三方许可随包保留，不将第三方组件统一重新许可为 MIT。
+产物位于 `.data/packages/space-browsa-1.0.8.zip`，通过发布中心上传并独立审核后公开。详细构建、安装和配置见 [SPACE AI 指南](extensions/space-browsa/README.md)。上游 MIT 与第三方许可随包保留，不将第三方组件统一重新许可为 MIT。
+
+### 交互式工具开发文档
+
+- [浏览器扩展实现指南](docs/space-ai-extension-implementation-guide.md)：Manifest V3、侧栏、sandbox、srcdoc、消息协议和后台存储的代码对接。
+- [完整架构与图表方案](docs/space-ai-interactive-ui-architecture.md)：生成协议、状态恢复、Canvas/SVG、图表交互、物理模拟和安全边界。
+- [聊天侧栏与工具卡片设计](docs/plans/space-ai-ui-optimization.md)：已确认的1.0.8界面优化范围。
+- [实际验证记录](docs/ai-ui.md)：安装包、命令、结果和未验证边界。

@@ -1,3 +1,63 @@
+# SPACE AI 1.0.8：扩展侧栏、交互工具卡片与实现文档
+
+交付日期：2026-10-14。按用户确认方案完成1.0.8本地构建；没有替换用户正在加载的目录，没有上传、审批或部署安装包。源码提交状态以Git历史为准；1.0.7阶段此前已提交到GitHub。
+
+## 实现与代码入口
+
+- `extensions/space-browsa/ai-ui/panel.js`：纯文本工具标题、版本、保存/错误分别显示；常用操作、更多菜单、内联重置确认、摘要与折叠JSON审阅。菜单支持键盘、外部点击及进入iframe时关闭；重置成功/失败后恢复可见控件焦点。收起后也能重置，最终保存失败不会继续清空状态。
+- 新增`ai-ui/panel.css`与`ai-ui/sidebar.css`，通过`ai-ui-patch.mjs`严格锚点接入：SPACE AI品牌、独立模型行、局部快捷栏/输入框、深浅主题、窄窗口。活动工具解除聊天气泡懒渲染限制，放大继续使用原iframe，避免消息包含块裁切。
+- `ai-ui/tool-prompt.mjs`加强图表轴范围、单位、ResizeObserver/DPR、有限JSON和窄屏指导；入口改为“交互工具”，保留草稿并避免重复追加。旧图表内部代码没有被改写，未添加统一图表SDK或开放CDN。
+- 新增[浏览器扩展实现指南](space-ai-extension-implementation-guide.md)、[完整架构与图表方案](space-ai-interactive-ui-architecture.md)、[UI方案](plans/space-ai-ui-optimization.md)和[独立预览](design/space-ai-ui-preview.html)。技术指南覆盖MV3、侧栏、sandbox、srcdoc、受限消息、后台存储与真实代码接入；预览不连接模型或真实聊天。
+
+## 实际验证
+
+先在原1.0.7包运行新增UI验收，标题和摘要缺失导致失败；之后在最终1.0.8包运行下列检查：
+
+```sh
+npm run check
+npm test
+npm audit --audit-level=moderate
+npm run browsa:build
+CHROMIUM_PATH='<本机Chromium路径>' npx playwright test \
+  tests/e2e/ai-tools-ui.spec.ts \
+  tests/e2e/ai-tools-flow.spec.ts \
+  tests/e2e/ai-tools-model.spec.ts \
+  tests/e2e/ai-tools-thinking.spec.ts \
+  tests/e2e/ai-tools.spec.ts \
+  tests/e2e/ai-ui.spec.ts \
+  tests/e2e/ai-ui-deepseek.spec.ts \
+  tests/e2e/reading.spec.ts \
+  tests/e2e/reading-selection.spec.ts
+```
+
+结果：类型检查通过；14文件160项Vitest通过；24项实际扩展浏览器验收通过（0跳过，56.0秒）；构建内72项上游回归通过。根依赖审计0漏洞；构建依赖保留4项既有KaTeX相关低危条目，无moderate/high条目；审计不覆盖全部预编译vendor。JS语法、文档代码片段、相对文件链接、diff与源码凭据模式检查通过。
+
+| 验证 | 观察结果 |
+| --- | --- |
+| 新卡片 | 标题、菜单与确认重置；键盘Enter后焦点恢复，收起后重置可用 |
+| 布局 | 多消息中放大卡片实际占面板视口，iframe实例不变；Escape与焦点恢复；360/420px深浅主题无页面级横向溢出 |
+| 分享与失败 | 摘要先显示、JSON按需展开、取消可用；最终保存失败时保留原工具与确认焦点，不调用RESET；草稿、附件和上下文守卫继续通过 |
+| 三类工具 | 回放原样DeepSeek计算器、动态图表、物理模拟，验证实际计算、Canvas变化、运行/暂停/单步、放大和持久恢复 |
+| 升级 | 把真实1.0.7的临时加载目录更新到1.0.8，再通过既有桥接重载核对版本；模型配置、历史和确认状态保留 |
+| 安全/阅读 | 原消息来源、隔离资源/导航、租约、脚本错误、默认思考、原始源码与阅读/附件回归保持通过 |
+
+本次没有重新请求外部模型：真实模型兼容性的既有证据见下方1.0.7/1.0.6记录，当前运行验收使用原样fixture及本地SSE模型服务。旧正弦样例在振幅3时仍有固定轴范围裁切；本轮明确记录该图表内部限制，加强新生成指导，不能把Canvas交互通过当作该样例坐标策略已修复。统一图表组件、更多选区/缩放交互和物理精度需按任务单独验收。
+
+截图与日志位于`.data/verification/ai-tools-1.0.8/`，包括三类工具放大截图、深浅主题窄屏、新卡片和结果审阅。独立预览的布局、交互和刷新保留演示状态另在`.data/verification/ui-design-20261014/`验证；它不替代上述实际扩展测试。
+
+## 最终产物与升级
+
+- 加载目录：`.data/packages/space-browsa-1.0.8/`
+- ZIP：`.data/packages/space-browsa-1.0.8.zip`
+- 固定扩展ID：`jjehpfemjinjjbffcccknjlafkcknpep`
+- 389文件，ZIP 10,336,379字节。
+- ZIP SHA256：`f2ef88cf1d4e7e6f92d8c255d45c01074525341f85dfbdc8660f54b539d4ba4f`
+- 最终59项配方哈希逐项匹配，包内panel.js与当前源码字节一致。manifest key、permissions、host_permissions、sandbox及CSP与1.0.7一致；原1.0.7产物保留，同版中间构建移入`.data/previous-builds/`。
+
+备份实际加载目录，再把新包文件更新到该目录，在扩展管理页重新加载并核对版本1.0.8；不要卸载或清空存储。首次安装可直接加载解压目录。macOS隔离Chromium143已实测；用户日常profile和Windows Edge尚未实测。构建/文件更新不等于用户浏览器已运行新版。
+
+---
+
 # SPACE AI 1.0.7：默认思考模式下源码展示修复
 
 2026-10-14 用户实测1.0.6仍只显示源码。本次保留1.0.6原加载目录，修复包升为1.0.7。本记录为本地验收记录；源码提交状态以Git历史为准，未上传安装包或替换用户目录。
