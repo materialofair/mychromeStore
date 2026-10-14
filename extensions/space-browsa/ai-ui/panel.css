@@ -1,0 +1,131 @@
+.space-ai-ui,
+.space-ai-ui * { box-sizing: border-box; }
+.space-ai-ui {
+  min-width: 0;
+  max-width: 100%;
+  margin: 14px 0;
+  padding: 12px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--bg);
+  color: var(--fg);
+  font-size: 13px;
+  line-height: 1.6;
+  overflow-wrap: anywhere;
+}
+.space-ai-ui [hidden] { display: none !important; }
+.space-ai-ui button {
+  min-height: 34px;
+  max-width: 100%;
+  padding: 6px 10px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--bg-2, var(--bg));
+  color: var(--fg);
+  font: inherit;
+  line-height: 1.4;
+  cursor: pointer;
+}
+.space-ai-ui button:hover { border-color: var(--fg-dim); }
+.space-ai-ui button:disabled { opacity: .55; cursor: default; }
+.space-ai-ui :is(button, textarea, summary, iframe):focus-visible,
+.space-ai-ui-source summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+.space-ai-ui > iframe {
+  display: block;
+  width: 100%;
+  height: 420px;
+  min-height: 240px;
+  border: 0;
+  background: #fff;
+}
+.space-tool-card { position: relative; padding: 0; }
+/* Active frames must remain rendered; containment would clip fixed zoom cards. */
+.cv-settled .msg:has(.space-ai-ui > iframe) { content-visibility: visible; contain-intrinsic-size: none; }
+.msg:has(.space-ai-ui-expanded) { content-visibility: visible; contain: none; }
+.space-tool-chrome { background: var(--bg); border-radius: 12px 12px 0 0; }
+.space-tool-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 12px 12px 4px;
+  border-radius: 12px 12px 0 0;
+  background: var(--bg);
+  z-index: 3;
+}
+.space-tool-identity { display: flex; flex: 1; flex-wrap: wrap; align-items: center; gap: 6px 8px; min-width: 0; }
+.space-tool-card .space-tool-title { margin: 3px 0; color: var(--fg); font-size: 14px; font-weight: 650; line-height: 1.5; min-width: 0; overflow-wrap: anywhere; }
+.space-tool-version { flex-shrink: 0; padding: 1px 6px; border-radius: 4px; background: var(--bg-2, var(--bg)); color: var(--fg-dim); font-size: 11px; line-height: 1.8; }
+.space-tool-status { padding: 0 12px; color: var(--fg-dim); font-size: 12px; }
+.space-tool-status p { margin: 3px 0; }
+.space-tool-status .space-tool-error { color: var(--accent); padding: 7px 9px; margin-top: 7px; border-left: 3px solid var(--accent); background: var(--bg-2, var(--bg)); }
+.space-tool-toolbar { display: flex; align-items: center; justify-content: flex-end; flex-wrap: wrap; gap: 6px; padding: 6px 12px 10px; border-bottom: 1px solid var(--border); }
+.space-tool-more { position: relative; flex-shrink: 0; }
+.space-tool-card .space-tool-more-button { background: transparent; font-size: 12px; }
+.space-tool-menu {
+  position: absolute;
+  top: calc(100% + 5px);
+  right: 0;
+  z-index: 8;
+  width: max-content;
+  min-width: 160px;
+  max-width: min(240px, calc(100vw - 48px));
+  padding: 5px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--bg);
+  box-shadow: 0 6px 20px rgb(0 0 0 / 16%);
+}
+.space-tool-card .space-tool-menu button { display: block; width: 100%; border-color: transparent; background: transparent; text-align: left; }
+.space-tool-card .space-tool-menu button:hover { background: var(--bg-2, var(--bg)); }
+.space-tool-footer { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px; padding: 10px 12px; border-top: 1px solid var(--border); background: var(--bg); }
+.space-tool-footer > span { flex: 1 1 120px; min-width: 0; color: var(--fg-dim); font-size: 12px; }
+.space-tool-footer button { flex-shrink: 0; border-color: var(--accent); color: var(--accent); }
+.space-tool-review,
+.space-tool-reset { padding: 12px; border-top: 1px solid var(--border); background: var(--bg-2, var(--bg)); }
+.space-tool-review p,
+.space-tool-reset p { margin: 0 0 9px; color: var(--fg-dim); font-size: 12px; }
+.space-tool-review .space-tool-result-summary { color: var(--fg); font-size: 14px; font-weight: 600; white-space: pre-wrap; }
+.space-tool-review details { margin: 8px 0; min-width: 0; font-size: 12px; color: var(--fg-dim); }
+.space-tool-review summary,
+.space-ai-ui-source summary { cursor: pointer; padding: 4px 0; }
+.space-tool-review pre { max-width: 100%; max-height: 180px; margin: 8px 0; overflow: auto; white-space: pre-wrap; overflow-wrap: anywhere; font-size: 12px; }
+.space-tool-review textarea { display: block; width: 100%; min-width: 0; min-height: 78px; resize: vertical; margin-top: 10px; padding: 9px; border: 1px solid var(--border); border-radius: 6px; background: var(--bg); color: var(--fg); font: inherit; }
+.space-tool-review-actions { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+.space-tool-reset button + button { margin-left: 6px; }
+.space-ai-ui-source { max-width: 100%; margin: 8px 0; color: var(--fg-dim); font-size: 12px; }
+.space-ai-ui-source pre { max-width: 100%; overflow: auto; }
+.space-tool-card.space-ai-ui-expanded {
+  position: fixed;
+  inset: 12px;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  max-width: none;
+  margin: 0;
+  overflow: auto;
+  overscroll-behavior: contain;
+  border-color: var(--fg-dim);
+  background: var(--bg);
+  box-shadow: 0 0 0 100vmax rgb(0 0 0 / 40%);
+}
+.space-ai-ui-expanded > .space-tool-chrome { position: sticky; top: 0; z-index: 3; flex-shrink: 0; }
+.space-ai-ui-expanded > iframe { flex: 1 0 240px; height: auto; }
+.space-ai-ui-expanded > :is(.space-tool-status, .space-tool-footer, .space-tool-review, .space-tool-reset) { flex-shrink: 0; }
+.space-tool-blocked { margin: 8px 0; padding: 10px 12px; border: 1px solid var(--border); border-left: 3px solid var(--accent); border-radius: 6px; background: var(--bg-2, var(--bg)); color: var(--fg); font-size: 13px; overflow-wrap: anywhere; }
+@media (max-width: 420px) {
+  .space-tool-header { gap: 6px; padding: 10px 10px 4px; }
+  .space-tool-identity { display: block; }
+  .space-tool-card .space-tool-title { font-size: 14px; }
+  .space-tool-status { padding-right: 10px; padding-left: 10px; }
+  .space-tool-toolbar { padding-right: 10px; padding-left: 10px; }
+  .space-tool-footer { padding: 10px; }
+  .space-tool-card.space-ai-ui-expanded { inset: 6px; }
+  .space-tool-card .space-tool-more-button { padding: 6px 8px; }
+}
+@media (max-width: 360px) {
+  .space-tool-header { flex-wrap: wrap; }
+  .space-tool-more { margin-left: auto; }
+  .space-tool-footer > span { flex-basis: 100%; }
+  .space-tool-review-actions > button { flex: 1 1 auto; }
+}

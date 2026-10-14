@@ -42,7 +42,7 @@ test('real DeepSeek HTML reply renders an interactive calculator instead of sour
     }), port);
     await panel.reload();
     await panel.locator('#input').fill('做一个可交互的加减乘除计算器');
-    await panel.getByRole('button', { name: 'AI UI', exact: true }).click();
+    await panel.getByRole('button', { name: '交互工具', exact: true }).click();
     await panel.locator('#send').click();
     await expect.poll(() => !!release).toBe(true);
     await expect(panel.locator('.space-ai-ui iframe')).toHaveCount(0);

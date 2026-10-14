@@ -38,7 +38,7 @@ test('AI UI complete stream, isolated interaction, malicious markup and history'
     const page = await context.newPage(); await page.goto('https://example.com');
     const panel = await context.newPage(); await panel.goto(`chrome-extension://${id}/sidepanel.html`);
     await panel.locator('#input').fill('Return a local task planner as space-ui');
-    await panel.getByRole('button',{name:'AI UI',exact:true}).click();
+    await panel.getByRole('button',{name:'交互工具',exact:true}).click();
     await expect(panel.locator('#input')).toHaveValue(/Return a local task planner as space-ui[\s\S]*space-ui Markdown/);
     expect(requests).toBe(0);
     await panel.locator('#send').click();

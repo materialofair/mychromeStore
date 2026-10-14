@@ -43,6 +43,7 @@ test('trusted result sharing preserves draft and attachment, sends once, and rev
     await expect.poll(()=>calls.length).toBe(2);
     await expect(panel.frameLocator('.space-ai-ui > iframe').nth(1).frameLocator('#tool').locator('#answer')).toHaveText('7');
     await expect(panel.locator('.space-ai-ui').nth(1).locator('.space-tool-version')).toContainText('修改版');
+    await panel.locator('.space-ai-ui').nth(1).getByRole('button',{name:'更多工具操作',exact:true}).click();
     await expect(panel.locator('.space-ai-ui').nth(1).getByRole('button',{name:'查看原版',exact:true})).toBeVisible();
     await expect(panel.frameLocator('.space-ai-ui > iframe').nth(0).frameLocator('#tool').locator('#answer')).toHaveText('5');
     await click('把结果发给 AI');await box.locator('textarea').fill('返回错误版本以检查保留旧工具');await click('修改这个工具');
@@ -65,6 +66,7 @@ test('native sandbox blocks parent APIs, resources and navigation, with recovera
     await expect.poll(()=>inner.evaluate(()=>(window as any).probes)).toEqual({parent:false,top:false,api:false,storage:false,fetchBlocked:true,popupBlocked:true});
     await tool.locator('#probe').click();await expect(panel.locator('.space-tool-status')).toContainText('arrays');
     await tool.locator('#navigate').click();await expect.poll(()=>inner.url()).not.toBe('about:srcdoc');expect(requests).toEqual([]);
+    await panel.getByRole('button',{name:'更多工具操作',exact:true}).click();
     const restart=panel.getByRole('button',{name:'重启',exact:true});await restart.scrollIntoViewIfNeeded();await restart.evaluate(()=>new Promise<void>(r=>requestAnimationFrame(()=>requestAnimationFrame(()=>r()))));await restart.click();
     await expect(tool.getByRole('heading',{name:'Boundary'})).toBeVisible({timeout:15000});expect(requests).toEqual([]);
   }finally{await context.close();server.closeAllConnections();await new Promise<void>(r=>server.close(()=>r()));await rm(root,{recursive:true,force:true});}
