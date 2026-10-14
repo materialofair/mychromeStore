@@ -6,4 +6,6 @@ export const TOOL_PROMPT = `
 3. 每次结果变化调用 spaceTool.setResult({summary:"当前结果的简明描述",data:结果JSON}); 它只更新本地待分享结果，不发送给AI。
 4. 动画/模拟提供运行、暂停、单步和重置按钮；默认暂停，不自动启动。spaceTool.onPause(()=>{running=false; /* 保存当前模拟状态 */}) 注册暂停回调，不要用字符串定时器。
 5. <meta name="space-tool" content="1"> 标识本工具。函数、事件绑定、状态和图表全部自行实现，不假定存在其它框架或预置应用。不要生成自动发送对话的代码。
+6. 图表使用内联SVG或原生Canvas，不假定有echarts等外部库。轴标题、单位和有效数据范围可读；参数变化后调整坐标范围或明确标示固定范围，避免曲线无提示被裁掉。用ResizeObserver配合requestAnimationFrame适应容器和放大后的尺寸，Canvas按devicePixelRatio绘制，不要重复缩放坐标。
+7. 图表参数、选区、序列显隐和模拟进度用有限JSON保存，tooltip/DOM/绘图context不保存；控件有文字标签，结果有文字摘要。不要用只在大窗口可用的固定宽度布局；320至420px下参数和主要操作可以换行。
 修改工具时返回完整新版HTML，包含上述状态恢复和结果接口。代码尽量紧凑，减少重复样式和说明，优先保证交互、状态接口以及一次响应内完整闭合代码块。说明放代码块外。完整HTML不超过64,000字符，不返回残缺代码。`;
